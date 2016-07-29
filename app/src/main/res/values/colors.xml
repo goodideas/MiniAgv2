@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#058043</color>
+    <color name="colorPrimary2">#10058043</color>
+    <color name="colorPrimaryDark">#058043</color>
+    <color name="colorMainBackground">#6bc133</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="toastTextColor">#ffffff</color>
+    <color name="toastBg">#30000000</color>
+    <color name="WhiteColor">#FFFFFF</color>
+    <color name="foreground_material_light">#ffffff</color>
+</resources>

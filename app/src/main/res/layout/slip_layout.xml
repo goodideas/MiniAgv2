@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAGVList"
+        android:background="@drawable/btn_background"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:text="搜索AGV"
+        />
+
+
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context=".activity.ProgrammedModeActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/rlTitleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--<Button-->
+            <!--android:id="@+id/btnSubProgrammedItem"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:background="@drawable/btn_background"-->
+            <!--android:text="减一个"-->
+            <!--android:visibility="visible"-->
+            <!--android:textColor="#FFFFFF" />-->
+
+
+        <TextView
+            android:id="@+id/tvCountItem"
+            android:textColor="#FFFFFF"
+            android:text="0"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:id="@+id/btnAddProgrammedItem"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_background"
+            android:text="清空"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llBtnProgrammed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnProgrammed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background"
+            android:text="编程"
+            android:layout_marginBottom="4dp"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/svProgrammedItem"
+        android:layout_below="@id/rlTitleButton"
+        android:layout_above="@id/llBtnProgrammed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llProgrammedItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            >
+
+            <!--<com.kevin.miniagv2.views.ProgrammedItem-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"/>-->
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

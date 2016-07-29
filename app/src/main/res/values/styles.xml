@@ -1,0 +1,41 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorForeground">@color/foreground_material_light</item>
+    </style>
+
+    <style name="MainActivityThem" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
+    </style>
+    <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
+
+    <declare-styleable name="PhasedSeekBar">
+        <attr name="phased_mode">
+            <enum name="horizontal" value="1"/>
+            <enum name="vertical" value="2"/>
+        </attr>
+        <attr name="phased_base_margin_left" format="dimension|reference"/>
+        <attr name="phased_base_margin_right" format="dimension|reference"/>
+        <attr name="phased_base_margin_top" format="dimension|reference"/>
+        <attr name="phased_base_margin_bottom" format="dimension|reference"/>
+        <attr name="phased_base_background" format="color|reference"/>
+        <attr name="phased_item_width" format="dimension|reference"/>
+        <attr name="phased_item_height" format="dimension|reference"/>
+        <attr name="phased_anchor_width" format="dimension|reference"/>
+        <attr name="phased_anchor_height" format="dimension|reference"/>
+        <attr name="phased_draw_on_off" format="boolean"/>
+        <attr name="phased_fix_point" format="boolean"/>
+    </declare-styleable>
+</resources>

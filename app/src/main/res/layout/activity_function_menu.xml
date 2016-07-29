@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activity.FunctionMenuActivity">
+
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+            <Button
+                android:layout_marginTop="8dp"
+                android:id="@+id/btnManualMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_background"
+                android:text="手动模式"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                />
+
+
+            <Button
+                android:layout_marginTop="8dp"
+                android:id="@+id/btnAutoMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_background"
+                android:text="自动模式"
+                android:textColor="#FFFFFF" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_marginTop="8dp"
+                android:id="@+id/btnRFIDProgrammed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_background"
+                android:text="RFID编程"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                />
+            <Button
+                android:layout_marginTop="8dp"
+                android:id="@+id/btnExtend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_background"
+                android:text="扩展"
+                android:textColor="#FFFFFF" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+    <!--<Button-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:id="@+id/btnManualMode"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/btn_background"-->
+        <!--android:text="手动模式"-->
+        <!--android:textColor="#FFFFFF" />-->
+
+    <!--<Button-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:id="@+id/btnAutoMode"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/btn_background"-->
+        <!--android:text="自动模式"-->
+        <!--android:textColor="#FFFFFF" />-->
+
+
+    <!--<Button-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:id="@+id/btnRFIDProgrammed"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/btn_background"-->
+        <!--android:text="RFID编程"-->
+        <!--android:textColor="#FFFFFF" />-->
+
+    <!--<Button-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:id="@+id/btnExtend"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/btn_background"-->
+        <!--android:text="扩展"-->
+        <!--android:textColor="#FFFFFF" />-->
+
+</LinearLayout>

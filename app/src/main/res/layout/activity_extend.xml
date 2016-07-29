@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    tools:context="com.example.administrator.miniagv.activity.ExtendActivity">
+
+    <com.kevin.miniagv2.views.ColorPicker xmlns:color="http://schemas.android.com/apk/res-auto"
+
+        android:id="@+id/colorPicker"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        color:color_center_radius="40dp"
+        color:color_wheel_thickness="25dp" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="#00000000"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
+        android:background="#00000000"
+        android:text="+"
+        android:textColor="#FFF"
+        android:textSize="40sp" />
+
+
+    <Button
+        android:id="@+id/btnReduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:background="#00000000"
+        android:text="—"
+        android:textColor="#FFF"
+        android:textSize="40sp" />
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/checkbox"
+        android:layout_below="@id/colorPicker"
+        android:layout_centerHorizontal="true"
+        android:text="长亮"
+        android:checked="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tvTips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="说明：点击 &quot;+&quot; 和 &quot;—&quot; 来设置灯的显示时间,长按 &quot;+&quot; 和 &quot;—&quot; 可以较快设置显示时间。滑动彩圈上的圆圈，可以设置灯的颜色。"
+        android:textColor="#FFF"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        />
+
+</RelativeLayout>
