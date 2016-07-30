@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     agvAdapter.notifyDataSetChanged();
                 }
 
-                ToastUtil.customToast(MainActivity.this, "setOnItemClickListener=" + String.valueOf(position));
+//                ToastUtil.customToast(MainActivity.this, "setOnItemClickListener=" + String.valueOf(position));
                 selected = isSelect ? position : -1;
                 lastSelect = position;
             }

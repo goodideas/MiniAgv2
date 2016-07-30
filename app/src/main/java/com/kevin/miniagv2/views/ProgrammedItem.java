@@ -26,11 +26,12 @@ import java.util.List;
 public class ProgrammedItem extends LinearLayout {
 
 //    private EditText etLoc, etRFID;
-    private TextView tvLoc;
+//    private TextView tvLoc;
+    private EditText etLoc;
     private TextView tvProgrammedRfid;
     private TextView tvNumber;
-    private RadioGroup radioGroup;
-    private RadioButton rbSpeed1, rbSpeed2;
+//    private RadioGroup radioGroup;
+//    private RadioButton rbSpeed1, rbSpeed2;
     private int rbSpeed = 1;
     private int spinnerSelect = 1;
     private Spinner spinnerProgrammed;
@@ -49,15 +50,15 @@ public class ProgrammedItem extends LinearLayout {
         super(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.programmed_item_layout, this, true);
-//        etLoc = (EditText) findViewById(R.id.etLoc);
+        etLoc = (EditText) findViewById(R.id.etLoc);
 //        etRFID = (EditText) findViewById(R.id.etRFID);
-        tvLoc = (TextView)findViewById(R.id.tvLoc);
+//        tvLoc = (TextView)findViewById(R.id.tvLoc);
         tvProgrammedRfid = (TextView)findViewById(R.id.tvProgrammedRfid);
         spinnerProgrammed = (Spinner) findViewById(R.id.spinnerProgrammed);
         tvNumber = (TextView) findViewById(R.id.tvNumber);
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupProgrammed);
-        rbSpeed1 = (RadioButton) findViewById(R.id.rbSpeed1);
-        rbSpeed2 = (RadioButton) findViewById(R.id.rbSpeed2);
+//        radioGroup = (RadioGroup) findViewById(R.id.radioGroupProgrammed);
+//        rbSpeed1 = (RadioButton) findViewById(R.id.rbSpeed1);
+//        rbSpeed2 = (RadioButton) findViewById(R.id.rbSpeed2);
         tvShowProgrammedNumber = (TextView)findViewById(R.id.tvShowProgrammedNumber);
         list.add("停止");
         list.add("前进");
@@ -79,20 +80,20 @@ public class ProgrammedItem extends LinearLayout {
 
             }
         });
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (rbSpeed1.getId() == checkedId) {
-                    rbSpeed = 1;
-                } else if (rbSpeed2.getId() == checkedId) {
-                    rbSpeed = 2;
-                }
-            }
-        });
+//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                if (rbSpeed1.getId() == checkedId) {
+//                    rbSpeed = 1;
+//                } else if (rbSpeed2.getId() == checkedId) {
+//                    rbSpeed = 2;
+//                }
+//            }
+//        });
     }
 
     public String getEtLoc() {
-        return tvLoc.getText().toString();
+        return etLoc.getText().toString();
     }
 
     public String getEtRFID() {
@@ -113,9 +114,9 @@ public class ProgrammedItem extends LinearLayout {
 
 
 
-    public int getTvNumber() {
-       return position;
-    }
+//    public int getTvNumber() {
+//       return position;
+//    }
     public void setTvNumber(String text) {
         position = Integer.parseInt(text);
         tvNumber.setText(text);
@@ -126,7 +127,7 @@ public class ProgrammedItem extends LinearLayout {
     }
 
     public void setEtLoc(String loc) {
-        tvLoc.setText(loc);
+        etLoc.setText(loc);
     }
 
     public void setmContent(int select){
@@ -137,11 +138,12 @@ public class ProgrammedItem extends LinearLayout {
     }
 
     public void setRbSpeed(int speed){
-        if(speed == 1){
-            rbSpeed1.setChecked(true);
-        }else if(speed == 2){
-            rbSpeed2.setChecked(true);
-        }
+        rbSpeed = speed;
+//        if(speed == 1){
+//            rbSpeed1.setChecked(true);
+//        }else if(speed == 2){
+//            rbSpeed2.setChecked(true);
+//        }
     }
 
 //    public void setOnLongClickListen(View.OnLongClickListener onLongClickListener){

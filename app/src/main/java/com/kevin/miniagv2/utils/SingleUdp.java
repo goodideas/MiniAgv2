@@ -41,7 +41,7 @@ public class SingleUdp {
     }
 
     //单例
-    public static synchronized SingleUdp getUdpInstance() {
+    public static SingleUdp getUdpInstance() {
         if (UdpInstance == null) {
             UdpInstance = new SingleUdp();
         }
@@ -56,6 +56,7 @@ public class SingleUdp {
     //设置Udp的IP
     public void setUdpIp(String ip) {
         this.ipAddress = ip;
+//        this.ipAddress = "255.255.255.255";
     }
 
     //设置Udp的本地端口
@@ -141,7 +142,7 @@ public class SingleUdp {
                         if (len > 0) {
                             Log.e(TAG,"len="+len);
 
-//                            Log.e(TAG,"revData="+Util.bytes2HexString(udpReceiveBytes, len));
+                            Log.e(TAG,"revData="+Util.bytes2HexString(udpReceiveBytes, len));
                             if (onReceiveListen != null) {
                                 onReceiveListen.onReceiveData(udpReceiveBytes, len, null);
                                 myhandler.sendEmptyMessage(RECEIVED_DATA);

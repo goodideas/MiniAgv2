@@ -104,16 +104,14 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
 
         wheelProgrammed.setAdapter(new ArrayWheelAdapter<>(sList));
         wheelProgrammed.setCyclic(true);
-        wheelProgrammed.TEXT_SIZE = 25;
-
+        wheelProgrammed.TEXT_SIZE = (int)(17*Util.getScreenDensity(this));
+        Log.e(TAG, "den=" + Util.getScreenDensity(this));
         wheelProgrammed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToastUtil.customToast(AutoModeActivity.this, "长按");
             }
         });
-
-
 
     }
 
@@ -321,7 +319,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
                 if (singleUdp != null) {
                     singleUdp.send(Util.HexString2Bytes(Constant.SEND_DATA_LOCK(spHelper.getSpAgvMac()).replace(" ", "")));
                 }
-
+                break;
             case R.id.btnEditProgrammed:
                 startActivity(new Intent(AutoModeActivity.this,ProgrammedModeActivity.class));
                 break;

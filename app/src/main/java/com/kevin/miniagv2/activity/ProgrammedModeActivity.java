@@ -77,6 +77,12 @@ public class ProgrammedModeActivity extends AppCompatActivity {
                 if (Util.checkData(mData)) {
                     String cmd = mData.substring(Constant.DATA_CMD_START, Constant.DATA_CMD_END);
                     Log.e(TAG,"接收的数据="+mData);
+
+                    if (Constant.CMD_PROGRAMMED_CLEAR_RESPOND.equalsIgnoreCase(cmd)) {
+                        ToastUtil.customToast(ProgrammedModeActivity.this, "清除成功");
+                    }
+
+
                     if (Constant.CMD_TRACK_RESPOND.equalsIgnoreCase(cmd)) {
                         ToastUtil.customToast(ProgrammedModeActivity.this, "开始编程");
                     }
@@ -106,10 +112,11 @@ public class ProgrammedModeActivity extends AppCompatActivity {
                                     final ProgrammedItem programmedItem = new ProgrammedItem(ProgrammedModeActivity.this);
                                     programmedItem.setLayoutParams(layoutParams);
                                     programmedItem.setTvNumber(String.valueOf(programmedItemList.size() + 1));
+                                    programmedItem.setRbSpeed(1);
                                     programmedItem.setEtRFID(Util.hexStringToAscii(
                                             revData.substring(Constant.DATA_CONTENT_START + 2, Constant.DATA_CONTENT_START + 18)));
-//                                    programmedItem.setEtLoc(revData.substring(Constant.DATA_CONTENT_START, Constant.DATA_CONTENT_START + 2));
-                                    programmedItem.setEtLoc(String.valueOf(programmedItemList.size() + 1));
+                                    programmedItem.setEtLoc(revData.substring(Constant.DATA_CONTENT_START, Constant.DATA_CONTENT_START + 2));
+//                                    programmedItem.setEtLoc(String.valueOf(programmedItemList.size() + 1));
                                     programmedItem.setmContent(Integer.parseInt(revData.substring(Constant.DATA_CONTENT_START + 18, Constant.DATA_CONTENT_START + 20), 16));
 //                                    programmedItem.setOnLongClickListen(new View.OnLongClickListener() {
 //                                        @Override
@@ -217,6 +224,10 @@ public class ProgrammedModeActivity extends AppCompatActivity {
         btnClearProgrammedItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(singleUdp!=null&&singleUdp.getIpAddress()!=null&&spHelper!=null&&spHelper.getSpAgvMac()!=null){
+                    singleUdp.send(Util.HexString2Bytes(Constant.SEND_DATA_PROGRAMMED_CLEAR(spHelper.getSpAgvMac()).replace(" ", "")));
+                }
                 dbCurd.delALLProgrammedData();
                 programmedItemList.clear();
                 llProgrammedItem.removeAllViews();
@@ -362,6 +373,10 @@ public class ProgrammedModeActivity extends AppCompatActivity {
         myHandler = new MyHandler(Looper.myLooper());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

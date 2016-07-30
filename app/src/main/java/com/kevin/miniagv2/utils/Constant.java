@@ -21,6 +21,7 @@ public class Constant {
     public static final String CMD_ERROR_STATU_RESPOND = "0181";//错误状态（自动返回指令）
     public static final String CMD_RFID_CAR_RESPOND = "0281";//监测到RFID卡（自动返回指令）
     public static final String CMD_STOP_FINISH_RESPOND = "0381";//停靠完成（自动返回指令）
+    public static final String CMD_PROGRAMMED_CLEAR_RESPOND = "1180";//清除编程数据完成
 
 
     public static final int REMOTE_PORT = 5678;//远程端口
@@ -109,6 +110,10 @@ public class Constant {
     }
     public static String SEND_DATA_DISTANCE_TEST(String agvMac){
         return "FFAA " + agvMac + " 1000 0100 00 00 FF55";
+    }
+
+    public static String SEND_DATA_PROGRAMMED_CLEAR(String agvMac){
+        return "FFAA " + agvMac + " 1100 0100 01 01 FF55";
     }
 
 }

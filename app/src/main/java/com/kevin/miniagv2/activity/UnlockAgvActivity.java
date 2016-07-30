@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.kevin.miniagv2.R;
 import com.kevin.miniagv2.entity.AgvBean;
@@ -38,6 +39,7 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
     private long exitTime = 0;
     private Button btnAGVList;
     private SpHelper spHelper;
+    private TextView tvCurrentAgvId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
         toolbar = (Toolbar) findViewById(R.id.toolBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         btnAGVList = (Button)findViewById(R.id.btnAGVList);
+        tvCurrentAgvId = (TextView)findViewById(R.id.tvCurrentAgvId);
         toolbar.setTitle(R.string.app_name);
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(toolbar);
@@ -107,6 +110,12 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
                     analysisData(mData);
                 }
             });
+            if(spHelper.getSpAgvId()==null){
+                tvCurrentAgvId.setText("没有ID");
+            }else{
+                tvCurrentAgvId.setText(spHelper.getSpAgvId());
+            }
+
         }
 
     }
@@ -140,6 +149,11 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
                     analysisData(mData);
                 }
             });
+            if(spHelper.getSpAgvId()==null){
+                tvCurrentAgvId.setText("没有ID");
+            }else{
+                tvCurrentAgvId.setText(spHelper.getSpAgvId());
+            }
         }
 
 

@@ -6,16 +6,14 @@
     android:background="@drawable/main_bg"
     tools:context=".activity.UnlockAgvActivity">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        >
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
 
     </android.support.v7.widget.Toolbar>
@@ -24,27 +22,48 @@
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         android:layout_below="@id/toolBar"
-        >
+        android:clickable="true">
         <!--主布局-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
+            android:layout_height="match_parent">
 
             <Button
+                android:id="@+id/btnUnlockAgv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="解锁AGV"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/btn_unlock_agv_bg"
-                android:id="@+id/btnUnlockAgv"
+                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:background="@drawable/btn_unlock_agv_bg"
+                android:text="解锁AGV"
+                android:textColor="#FFFFFF" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/unlock_current_agv_id_bg"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/tvShowCurrentAgvId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当前连接的是 "
+                    android:textColor="#FFF"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvCurrentAgvId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#FFF"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
 
         </RelativeLayout>
@@ -52,14 +71,14 @@
 
         <!--侧滑菜单-->
         <!--<LinearLayout-->
-            <!--android:layout_width="300dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@color/colorPrimary"-->
-            <!--android:layout_gravity="start"-->
-            <!--android:orientation="vertical"-->
-            <!-->-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:orientation="vertical"-->
+        <!-->-->
 
-       <!-- -->
+        <!-- -->
 
         <!--</LinearLayout>-->
 
@@ -68,10 +87,8 @@
             layout="@layout/slip_layout"
             android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            />
+            android:layout_gravity="start" />
     </android.support.v4.widget.DrawerLayout>
-
 
 
 </RelativeLayout>

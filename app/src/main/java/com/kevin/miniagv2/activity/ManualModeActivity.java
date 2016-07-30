@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -48,8 +49,9 @@ public class ManualModeActivity extends AppCompatActivity {
     private int countSend = 0;
     private SpHelper spHelper;
     private static final int OPERATION_TIME = 30;
-    private static final int SEND_TIME = 30;
+    private static final int SEND_TIME = 0; //30
     private CheckBox checkboxDistanceTest;
+    private Vibrator vibrator;//震动
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class ManualModeActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setSubtitle("选择功能");
         }
-
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         seekBarLeft = (SpeedSeekBar) findViewById(R.id.speedSeekBarLeft);
         seekBarRight = (SpeedSeekBar) findViewById(R.id.speedSeekBarRight);
         speedSeekBarCenter = (SpeedSeekBar) findViewById(R.id.speedSeekBarCenter);
@@ -242,7 +244,7 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onPositionSelected(int position) {
                 final int spd;
-
+                vibrator.vibrate(100);
                 if (System.currentTimeMillis() - currentTime > OPERATION_TIME) {
                     countSend = 0;
                     currentTime = System.currentTimeMillis();
@@ -277,7 +279,7 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onPositionSelected(int position) {
                 final int spd;
-
+                vibrator.vibrate(100);
                 if (System.currentTimeMillis() - currentTime > OPERATION_TIME) {
                     countSend = 0;
                     currentTime = System.currentTimeMillis();
