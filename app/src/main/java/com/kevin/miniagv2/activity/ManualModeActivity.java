@@ -8,9 +8,7 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,7 +16,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.kevin.miniagv2.R;
-import com.kevin.miniagv2.entity.AgvBean;
 import com.kevin.miniagv2.utils.Constant;
 import com.kevin.miniagv2.utils.OnReceiveListen;
 import com.kevin.miniagv2.utils.SingleUdp;
@@ -44,12 +41,7 @@ public class ManualModeActivity extends AppCompatActivity {
     private boolean flag = true;
     private TextView tvManualErrorStatus;
     private String mManualErrorStatus;
-
-    private long currentTime = 0;
-    private int countSend = 0;
     private SpHelper spHelper;
-    private static final int OPERATION_TIME = 30;
-    private static final int SEND_TIME = 0; //30
     private CheckBox checkboxDistanceTest;
     private Vibrator vibrator;//震动
 
@@ -71,7 +63,7 @@ public class ManualModeActivity extends AppCompatActivity {
 
         tvManualErrorStatus = (TextView) findViewById(R.id.tvManualErrorStatus);
         btnManualStop = (Button) findViewById(R.id.btnManualStop);
-        checkboxDistanceTest = (CheckBox)findViewById(R.id.checkboxDistanceTest);
+        checkboxDistanceTest = (CheckBox) findViewById(R.id.checkboxDistanceTest);
         spHelper = new SpHelper(this);
 
         singleUdp = SingleUdp.getUdpInstance();
@@ -83,7 +75,6 @@ public class ManualModeActivity extends AppCompatActivity {
 
         } else {
             singleUdp.start();
-
             singleUdp.receiveUdp();
             singleUdp.setOnReceiveListen(new OnReceiveListen() {
                 @Override
@@ -92,13 +83,7 @@ public class ManualModeActivity extends AppCompatActivity {
                     if (Util.checkData(mData)) {
                         String cmd = mData.substring(Constant.DATA_CMD_START, Constant.DATA_CMD_END);
                         if (Constant.CMD_MANUAL_RESPOND.equalsIgnoreCase(cmd)) {
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-                                    ToastUtil.customToast(ManualModeActivity.this, "操作成功");
-//                                }
-//                            });
-
+                            ToastUtil.customToast(ManualModeActivity.this, "操作成功");
                         } else if (Constant.CMD_UNLOCK_RESPOND.equalsIgnoreCase(cmd)) {
                             Intent in = new Intent();
                             in.putExtra(Constant.INTENT_NAME, Constant.INTENT_VALUE);
@@ -135,7 +120,6 @@ public class ManualModeActivity extends AppCompatActivity {
 
 
         speedSeekBarCenter.setAdapter(new SimpleSpeedSeekBarAdapter(resources, new int[]{
-
                 R.drawable.btn_star3_selector,
                 R.drawable.btn_star2_selector,
                 R.drawable.btn_star1_selector,
@@ -143,7 +127,6 @@ public class ManualModeActivity extends AppCompatActivity {
                 R.drawable.btn_star4_selector,
                 R.drawable.btn_star5_selector,
                 R.drawable.btn_star6_selector
-
         }));
         seekBarLeft.setAdapter(new SimpleSpeedSeekBarAdapter(resources, new int[]{
                 R.drawable.btn_star3_selector,
@@ -168,44 +151,6 @@ public class ManualModeActivity extends AppCompatActivity {
         seekBarRight.setPosition(3);
         speedSeekBarCenter.setPosition(3);
 
-
-        speedSeekBarCenter.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    countSend = 0;
-                }
-
-                return false;
-            }
-        });
-
-
-        seekBarLeft.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    countSend = 0;
-                }
-
-                return false;
-            }
-        });
-
-        seekBarRight.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    countSend = 0;
-                }
-
-                return false;
-            }
-        });
-
         speedSeekBarCenter.setListener(new SpeedSeekBarListener() {
             @Override
             public void onPositionSelected(int position) {
@@ -214,19 +159,10 @@ public class ManualModeActivity extends AppCompatActivity {
                 seekBarLeft.setPosition(position);
                 seekBarRight.setPosition(position);
                 flag = true;
-                if (System.currentTimeMillis() - currentTime > OPERATION_TIME) {
-                    countSend = 0;
-                    currentTime = System.currentTimeMillis();
-                } else {
-                    countSend++;
-                    currentTime = System.currentTimeMillis();
-                }
 
-                Log.e(TAG, "countSend = " + countSend);
                 spd = position > 3 ? position : (3 - position);
-
 //                14 15 16 字节分别是 左轮速度、右轮速度、校验位
-                new Handler().postDelayed(new Runnable() {
+                new Handler().post(new Runnable() {
                     @Override
                     public void run() {
                         sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
@@ -236,7 +172,8 @@ public class ManualModeActivity extends AppCompatActivity {
                         sendData[16] = Util.CheckCode(hexData);
                         singleUdp.send(sendData);
                     }
-                }, countSend * SEND_TIME);
+                });
+
 
             }
         });
@@ -244,20 +181,11 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onPositionSelected(int position) {
                 final int spd;
-                vibrator.vibrate(100);
-                if (System.currentTimeMillis() - currentTime > OPERATION_TIME) {
-                    countSend = 0;
-                    currentTime = System.currentTimeMillis();
-                } else {
-                    countSend++;
-                    currentTime = System.currentTimeMillis();
-                }
-
                 spd = position > 3 ? position : (3 - position);
                 leftWheel = Byte.parseByte("" + spd);
                 if (flag) {
 
-                    new Handler().postDelayed(new Runnable() {
+                    new Handler().post(new Runnable() {
                         @Override
                         public void run() {
                             sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
@@ -267,11 +195,8 @@ public class ManualModeActivity extends AppCompatActivity {
                             sendData[16] = Util.CheckCode(hexData);
                             singleUdp.send(sendData);
                         }
-                    }, countSend * SEND_TIME);
-
-
+                    });
                 }
-//                ToastUtil.customToast(ManualModeActivity.this, "seekBarLeft position=" + (spd));
             }
         });
 
@@ -280,23 +205,14 @@ public class ManualModeActivity extends AppCompatActivity {
             public void onPositionSelected(int position) {
                 final int spd;
                 vibrator.vibrate(100);
-                if (System.currentTimeMillis() - currentTime > OPERATION_TIME) {
-                    countSend = 0;
-                    currentTime = System.currentTimeMillis();
-                } else {
-                    countSend++;
-                    currentTime = System.currentTimeMillis();
-                }
-
 
                 spd = position > 3 ? position : (3 - position);
-
 
                 rightWheel = Byte.parseByte("" + spd);
 
                 if (flag) {
 
-                    new Handler().postDelayed(new Runnable() {
+                    new Handler().post(new Runnable() {
                         @Override
                         public void run() {
                             sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
@@ -306,11 +222,10 @@ public class ManualModeActivity extends AppCompatActivity {
                             sendData[16] = Util.CheckCode(hexData);
                             singleUdp.send(sendData);
                         }
-                    }, countSend * SEND_TIME);
+                    });
 
 
                 }
-//                ToastUtil.customToast(ManualModeActivity.this, "seekBarRight position=" + (spd) + " po=" + position);
             }
         });
 
