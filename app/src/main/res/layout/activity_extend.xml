@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg"
+    android:background="@drawable/agv_list_bg"
     tools:context="com.example.administrator.miniagv.activity.ExtendActivity">
 
     <com.kevin.miniagv2.views.ColorPicker xmlns:color="http://schemas.android.com/apk/res-auto"

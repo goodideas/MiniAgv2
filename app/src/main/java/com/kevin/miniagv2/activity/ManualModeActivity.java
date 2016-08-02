@@ -159,7 +159,7 @@ public class ManualModeActivity extends AppCompatActivity {
                 seekBarLeft.setPosition(position);
                 seekBarRight.setPosition(position);
                 flag = true;
-
+                vibrator.vibrate(100);
                 spd = position > 3 ? position : (3 - position);
 //                14 15 16 字节分别是 左轮速度、右轮速度、校验位
                 new Handler().post(new Runnable() {
@@ -184,7 +184,7 @@ public class ManualModeActivity extends AppCompatActivity {
                 spd = position > 3 ? position : (3 - position);
                 leftWheel = Byte.parseByte("" + spd);
                 if (flag) {
-
+                    vibrator.vibrate(100);
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
@@ -204,14 +204,14 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onPositionSelected(int position) {
                 final int spd;
-                vibrator.vibrate(100);
+
 
                 spd = position > 3 ? position : (3 - position);
 
                 rightWheel = Byte.parseByte("" + spd);
 
                 if (flag) {
-
+                    vibrator.vibrate(100);
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {

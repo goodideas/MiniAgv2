@@ -28,7 +28,7 @@ import com.kevin.miniagv2.utils.Util;
 import com.kevin.miniagv2.utils.WaitDialog;
 
 
-public class UnlockAgvActivity extends AppCompatActivity implements View.OnClickListener{
+public class UnlockAgvActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "UnlockAgvActivity";
     private Button btnUnlockAgv;
@@ -40,6 +40,7 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
     private Button btnAGVList;
     private SpHelper spHelper;
     private TextView tvCurrentAgvId;
+    private Button btnAGVSmartLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,9 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
 
         init();
 
-
-
-        if (btnUnlockAgv != null) {
-            btnUnlockAgv.setOnClickListener(this);
-        }
-
+        btnUnlockAgv.setOnClickListener(this);
+        btnAGVList.setOnClickListener(this);
+        btnAGVSmartLink.setOnClickListener(this);
 
         mDrawerToggle = new ActionBarDrawerToggle(UnlockAgvActivity.this, mDrawerLayout, toolbar,
                 R.string.app_name, R.string.app_name) {
@@ -71,25 +69,38 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-        btnAGVList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    mDrawerLayout.closeDrawer(GravityCompat.START);
-                }
-                startActivity(new Intent(UnlockAgvActivity.this,MainActivity.class));
-            }
-        });
+
+//        btnAGVList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+//                    mDrawerLayout.closeDrawer(GravityCompat.START);
+//                }
+//                startActivity(new Intent(UnlockAgvActivity.this, MainActivity.class));
+//            }
+//        });
+//
+//        btnAGVSmartLink.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+//                    mDrawerLayout.closeDrawer(GravityCompat.START);
+//                }
+//                startActivity(new Intent(UnlockAgvActivity.this, SmartLinkActivity.class));
+//            }
+//        });
     }
 
     private void init() {
 
         setContentView(R.layout.activity_unlock_agv);
-        btnUnlockAgv = (Button)findViewById(R.id.btnUnlockAgv);
+        btnUnlockAgv = (Button) findViewById(R.id.btnUnlockAgv);
         toolbar = (Toolbar) findViewById(R.id.toolBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        btnAGVList = (Button)findViewById(R.id.btnAGVList);
-        tvCurrentAgvId = (TextView)findViewById(R.id.tvCurrentAgvId);
+        btnAGVList = (Button) findViewById(R.id.btnAGVList);
+        tvCurrentAgvId = (TextView) findViewById(R.id.tvCurrentAgvId);
+        btnAGVSmartLink = (Button) findViewById(R.id.btnAGVSmartLink);
         toolbar.setTitle(R.string.app_name);
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(toolbar);
@@ -97,7 +108,7 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
             getSupportActionBar().setHomeButtonEnabled(true);
         }
         spHelper = new SpHelper(UnlockAgvActivity.this);
-        if(!TextUtils.isEmpty(spHelper.getSpAgvIp())&&!TextUtils.isEmpty(spHelper.getSpAgvMac())){
+        if (!TextUtils.isEmpty(spHelper.getSpAgvIp()) && !TextUtils.isEmpty(spHelper.getSpAgvMac())) {
             singleUdp = SingleUdp.getUdpInstance();
             singleUdp.setUdpIp(spHelper.getSpAgvIp());
             singleUdp.setUdpRemotePort(Constant.REMOTE_PORT);
@@ -110,9 +121,9 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
                     analysisData(mData);
                 }
             });
-            if(spHelper.getSpAgvId()==null){
+            if (spHelper.getSpAgvId() == null) {
                 tvCurrentAgvId.setText("没有ID");
-            }else{
+            } else {
                 tvCurrentAgvId.setText(spHelper.getSpAgvId());
             }
 
@@ -120,12 +131,12 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void analysisData(String data){
-        if(Util.checkData(data)){
-            String cmd = data.substring(Constant.DATA_CMD_START,Constant.DATA_CMD_END);
-            if(Constant.CMD_UNLOCK_RESPOND.equalsIgnoreCase(cmd)){
+    private void analysisData(String data) {
+        if (Util.checkData(data)) {
+            String cmd = data.substring(Constant.DATA_CMD_START, Constant.DATA_CMD_END);
+            if (Constant.CMD_UNLOCK_RESPOND.equalsIgnoreCase(cmd)) {
                 WaitDialog.immediatelyDismiss();
-                startActivity(new Intent(UnlockAgvActivity.this,FunctionMenuActivity.class));
+                startActivity(new Intent(UnlockAgvActivity.this, FunctionMenuActivity.class));
             }
         }
     }
@@ -135,7 +146,7 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
     protected void onStart() {
         super.onStart();
         Log.e(TAG, "onStart");
-        if(!TextUtils.isEmpty(spHelper.getSpAgvIp())&&!TextUtils.isEmpty(spHelper.getSpAgvMac())){
+        if (!TextUtils.isEmpty(spHelper.getSpAgvIp()) && !TextUtils.isEmpty(spHelper.getSpAgvMac())) {
             singleUdp = SingleUdp.getUdpInstance();
             singleUdp.setUdpIp(spHelper.getSpAgvIp());
             singleUdp.setUdpRemotePort(Constant.REMOTE_PORT);
@@ -149,9 +160,9 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
                     analysisData(mData);
                 }
             });
-            if(spHelper.getSpAgvId()==null){
+            if (spHelper.getSpAgvId() == null) {
                 tvCurrentAgvId.setText("没有ID");
-            }else{
+            } else {
                 tvCurrentAgvId.setText(spHelper.getSpAgvId());
             }
         }
@@ -171,24 +182,36 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnUnlockAgv:
-                if(spHelper==null||TextUtils.isEmpty(spHelper.getSpAgvIp())||TextUtils.isEmpty(spHelper.getSpAgvMac())){
+                if (spHelper == null || TextUtils.isEmpty(spHelper.getSpAgvIp()) || TextUtils.isEmpty(spHelper.getSpAgvMac())) {
                     ToastUtil.customToast(this, "当前没有选择AGV，请搜索AGV");
-                }else{
-                    if(singleUdp==null){
+                } else {
+                    if (singleUdp == null) {
                         singleUdp = SingleUdp.getUdpInstance();
-                    }else if(TextUtils.isEmpty(singleUdp.getIpAddress())){
+                    } else if (TextUtils.isEmpty(singleUdp.getIpAddress())) {
                         singleUdp.setUdpIp(spHelper.getSpAgvIp());
                         singleUdp.setUdpRemotePort(Constant.REMOTE_PORT);
                         singleUdp.start();
-                    }else{
+                    } else {
                         singleUdp.send(Util.HexString2Bytes(Constant.SEND_DATA_UNLOCK(spHelper.getSpAgvMac()).replace(" ", "")));
                         WaitDialog.showDialog(UnlockAgvActivity.this, "正在解锁", Constant.UNLOCK_WAIT_DIALOG_MAX_TIME, null);
                     }
 
                 }
+                break;
+            case R.id.btnAGVSmartLink:
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                }
+                startActivity(new Intent(UnlockAgvActivity.this, SmartLinkActivity.class));
+                break;
 
+            case R.id.btnAGVList:
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                }
+                startActivity(new Intent(UnlockAgvActivity.this, MainActivity.class));
                 break;
         }
     }
@@ -215,7 +238,7 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(singleUdp!=null){
+        if (singleUdp != null) {
             singleUdp.stop();
         }
     }

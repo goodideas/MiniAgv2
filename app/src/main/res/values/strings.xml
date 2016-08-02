@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MiniAgv2</string>
+    <string name="app_name">MiniAgv小车</string>
+    <string name="unlock_current_connect">当前连接ID</string>
 </resources>

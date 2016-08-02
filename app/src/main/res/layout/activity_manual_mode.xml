@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg"
+    android:background="@drawable/agv_list_bg"
     tools:context=".activity.ManualModeActivity">
 
     <TextView
@@ -49,7 +49,6 @@
             android:layout_weight="1"
             android:layout_width="100dp"
             android:layout_height="260dp"
-
             app:phased_anchor_height="20dp"
             app:phased_anchor_width="20dp"
             app:phased_base_background="@drawable/speed_seek_bar_bg"
@@ -57,12 +56,11 @@
             app:phased_base_margin_left="20dp"
             app:phased_base_margin_right="20dp"
             app:phased_base_margin_top="10dp"
-            app:phased_draw_on_off="false"
+            app:phased_draw_on_off="true"
             app:phased_fix_point="true"
-            app:phased_item_height="40dp"
-            app:phased_item_width="40dp"
+            app:phased_item_height="15dp"
+            app:phased_item_width="30dp"
             app:phased_mode="vertical" />
-
 
         <com.kevin.miniagv2.views.SpeedSeekBar
             android:layout_weight="1"
@@ -71,12 +69,12 @@
             android:layout_height="320dp"
             app:phased_anchor_height="40dp"
             app:phased_anchor_width="40dp"
-            app:phased_base_background="#124589"
+            app:phased_base_background="@drawable/speed_seek_bar_bg"
             app:phased_base_margin_bottom="10dp"
             app:phased_base_margin_left="20dp"
             app:phased_base_margin_right="20dp"
             app:phased_base_margin_top="10dp"
-            app:phased_draw_on_off="false"
+            app:phased_draw_on_off="true"
             app:phased_fix_point="true"
             app:phased_item_height="40dp"
             app:phased_item_width="40dp"
@@ -88,8 +86,6 @@
             android:layout_weight="1"
             android:layout_width="100dp"
             android:layout_height="260dp"
-
-
             app:phased_anchor_height="40dp"
             app:phased_anchor_width="40dp"
             app:phased_base_background="@drawable/speed_seek_bar_bg"
@@ -97,10 +93,10 @@
             app:phased_base_margin_left="20dp"
             app:phased_base_margin_right="20dp"
             app:phased_base_margin_top="10dp"
-            app:phased_draw_on_off="false"
+            app:phased_draw_on_off="true"
             app:phased_fix_point="true"
-            app:phased_item_height="40dp"
-            app:phased_item_width="40dp"
+            app:phased_item_height="15dp"
+            app:phased_item_width="30dp"
             app:phased_mode="vertical" />
 
 

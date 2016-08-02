@@ -4,29 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/main_bg"
+    android:background="@drawable/agv_list_bg"
     tools:context=".activity.MainActivity">
 
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:id="@+id/toolBar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--android:minHeight="?attr/actionBarSize"-->
-        <!--app:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
-        <!-->-->
-    <!--</android.support.v7.widget.Toolbar>-->
-
-    <!--<android.support.v4.widget.DrawerLayout-->
-        <!--android:id="@+id/drawerLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:clickable="true"-->
-        <!--android:layout_below="@id/toolBar"-->
-        <!-->-->
-        <!--主布局-->
      <RelativeLayout
          android:layout_width="match_parent"
          android:layout_height="match_parent"
@@ -69,25 +49,6 @@
          android:listSelector="#00000000"
          android:divider="#00000000" />
 
-
-
      </RelativeLayout>
-
-
-        <!--侧滑菜单-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="300dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@color/colorPrimary"-->
-            <!--android:layout_gravity="start"-->
-            <!--android:orientation="vertical"-->
-            <!-->-->
-
-
-
-        <!--</LinearLayout>-->
-    <!--</android.support.v4.widget.DrawerLayout>-->
-
-
 
 </RelativeLayout>

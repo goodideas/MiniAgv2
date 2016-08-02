@@ -1,20 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:background="@color/colorPrimary"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnAGVList"
-        android:background="@drawable/btn_background"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:textColor="#FFFFFF"
-        android:text="搜索AGV"
-        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/colorSlideTitle"
+        >
+
+        <ImageView
+            android:padding="10dp"
+            android:src="@drawable/car_show_72"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/imageView" />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="迷你AGV"
+            android:typeface="normal"
+            android:textColor="#5b5b5b"
+            android:textSize="12sp"
+            android:layout_below="@id/imageView"
+            />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@color/colorSlideContent"
+        >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnAGVList"
+            android:background="@drawable/btn_slide_bg"
+            android:layout_marginTop="2dp"
+            android:gravity="left|center"
+            android:padding="10dp"
+            android:text="搜索"
+            />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnAGVSmartLink"
+            android:background="@drawable/btn_slide_bg"
+            android:layout_marginTop="2dp"
+            android:textColor="#353535"
+            android:gravity="left|center"
+            android:padding="10dp"
+            android:text="smartLink"
+            />
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

@@ -29,6 +29,7 @@ import com.kevin.miniagv2.utils.SpHelper;
 import com.kevin.miniagv2.utils.ToastUtil;
 import com.kevin.miniagv2.utils.Util;
 import com.kevin.miniagv2.views.ArrayWheelAdapter;
+import com.kevin.miniagv2.views.WheelAdapter;
 import com.kevin.miniagv2.views.WheelView;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
     private DBCurd dbCurd;
 
     private List<String> sList = new ArrayList<>();
+    private ArrayWheelAdapter arrayWheelAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,10 +103,10 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-
-        wheelProgrammed.setAdapter(new ArrayWheelAdapter<>(sList));
+        arrayWheelAdapter = new ArrayWheelAdapter(sList);
+        wheelProgrammed.setAdapter(arrayWheelAdapter);
         wheelProgrammed.setCyclic(true);
-        wheelProgrammed.TEXT_SIZE = (int)(17*Util.getScreenDensity(this));
+        wheelProgrammed.TEXT_SIZE = (int) (17 * Util.getScreenDensity(this));
         Log.e(TAG, "den=" + Util.getScreenDensity(this));
         wheelProgrammed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,10 +254,9 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
                 String rfid = data.substring(Constant.DATA_CONTENT_START + 2, Constant.DATA_CONTENT_START + 18);
 
                 int getI = getLoc(sList, Util.hexStringToAscii(rfid));
-                if (getI!=-1) {
+                if (getI != -1) {
                     wheelProgrammed.setCurrentItem(getI);
                 }
-
 
 
                 //错误状态自动返回
@@ -283,6 +284,19 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
 
 
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "start");
+        if(wheelProgrammed!=null&&sList!=null){
+            Log.e(TAG, "wheel!=null size=" + sList.size());
+            arrayWheelAdapter = new ArrayWheelAdapter(sList);
+            wheelProgrammed.setAdapter(arrayWheelAdapter);
+        }
+
+
     }
 
     @Override
@@ -321,7 +335,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case R.id.btnEditProgrammed:
-                startActivity(new Intent(AutoModeActivity.this,ProgrammedModeActivity.class));
+                startActivity(new Intent(AutoModeActivity.this, ProgrammedModeActivity.class));
                 break;
         }
     }
