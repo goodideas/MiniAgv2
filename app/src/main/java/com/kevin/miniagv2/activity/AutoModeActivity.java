@@ -290,8 +290,19 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
     protected void onStart() {
         super.onStart();
         Log.e(TAG, "start");
-        if(wheelProgrammed!=null&&sList!=null){
-            Log.e(TAG, "wheel!=null size=" + sList.size());
+        if(wheelProgrammed!=null&&sList!=null&&dbCurd!=null){
+            //从数据库读取信息
+            List<ProgrammedBean> pList = dbCurd.getAllProgrammedData();
+            //如果数据不为空，将数据添加到sList中
+            if (pList.size() != 0) {
+                for (ProgrammedBean programmedBean : pList) {
+                    sList.add(programmedBean.toString());
+                }
+            }else{
+                //如果数据为空，则清空sList
+                sList.clear();
+            }
+            //重新导入数据源
             arrayWheelAdapter = new ArrayWheelAdapter(sList);
             wheelProgrammed.setAdapter(arrayWheelAdapter);
         }
