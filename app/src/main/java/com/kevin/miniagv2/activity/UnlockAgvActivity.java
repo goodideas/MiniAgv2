@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kevin.miniagv2.R;
-import com.kevin.miniagv2.entity.AgvBean;
 import com.kevin.miniagv2.utils.Constant;
 import com.kevin.miniagv2.utils.OnReceiveListen;
 import com.kevin.miniagv2.utils.SingleUdp;
@@ -45,9 +44,7 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         init();
-
         btnUnlockAgv.setOnClickListener(this);
         btnAGVList.setOnClickListener(this);
         btnAGVSmartLink.setOnClickListener(this);
@@ -70,26 +67,6 @@ public class UnlockAgvActivity extends AppCompatActivity implements View.OnClick
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-//        btnAGVList.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-//                    mDrawerLayout.closeDrawer(GravityCompat.START);
-//                }
-//                startActivity(new Intent(UnlockAgvActivity.this, MainActivity.class));
-//            }
-//        });
-//
-//        btnAGVSmartLink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-//                    mDrawerLayout.closeDrawer(GravityCompat.START);
-//                }
-//                startActivity(new Intent(UnlockAgvActivity.this, SmartLinkActivity.class));
-//            }
-//        });
     }
 
     private void init() {

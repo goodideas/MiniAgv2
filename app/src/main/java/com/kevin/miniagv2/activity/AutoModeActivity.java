@@ -47,10 +47,8 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
     private Button btnEditProgrammed;
 
     private TextView tvLeftWheelSpeed, tvDistance, tvRightWheelSpeed, tvAgvMode, tvAgvStatus, tvErrorStatus, tvRFID;
-    private EditText etLoc;
-
-
-    private int rbSpeed = 1;
+//    private EditText etLoc;
+//    private int rbSpeed = 1;
 
     private SingleUdp singleUdp;
     private SpHelper spHelper;
@@ -108,12 +106,12 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
         wheelProgrammed.setCyclic(true);
         wheelProgrammed.TEXT_SIZE = (int) (17 * Util.getScreenDensity(this));
         Log.e(TAG, "den=" + Util.getScreenDensity(this));
-        wheelProgrammed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.customToast(AutoModeActivity.this, "长按");
-            }
-        });
+//        wheelProgrammed.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ToastUtil.customToast(AutoModeActivity.this, "长按");
+//            }
+//        });
 
     }
 
@@ -290,7 +288,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
     protected void onStart() {
         super.onStart();
         Log.e(TAG, "start");
-        if(wheelProgrammed!=null&&sList!=null&&dbCurd!=null){
+        if (wheelProgrammed != null && sList != null && dbCurd != null) {
             //从数据库读取信息
             List<ProgrammedBean> pList = dbCurd.getAllProgrammedData();
             //如果数据不为空，将数据添加到sList中
@@ -298,7 +296,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
                 for (ProgrammedBean programmedBean : pList) {
                     sList.add(programmedBean.toString());
                 }
-            }else{
+            } else {
                 //如果数据为空，则清空sList
                 sList.clear();
             }
