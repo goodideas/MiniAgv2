@@ -38,6 +38,7 @@ public class SpeedSeekBar extends View {
     protected int mCurrentItem;
     protected SpeedSeekBarAdapter mAdapter;
     protected SpeedSeekBarListener mListener;
+    private SpeedSeekBarActionUp mActionUp;
 
     public SpeedSeekBar(Context context) {
         super(context);
@@ -172,6 +173,12 @@ public class SpeedSeekBar extends View {
         mCurrentX = mModeIsHorizontal ? getNormalizedX(event) : mPivotX;
         mCurrentY = !mModeIsHorizontal ? getNormalizedY(event) : mPivotY;
         int action = event.getAction();
+        if(action==MotionEvent.ACTION_UP){
+            if(mActionUp !=null){
+                mActionUp.onActionUp();
+            }
+            Log.e(TAG,"UUUUUUUUUUUUUUUUUUUUUUUUUU");
+        }
         mUpdateFromPosition = mFixPoint && action == MotionEvent.ACTION_UP;
         mState = action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL
                 ? STATE_SELECTED : STATE_PRESSED;
@@ -206,6 +213,10 @@ public class SpeedSeekBar extends View {
 
     public void setListener(SpeedSeekBarListener listener) {
         mListener = listener;
+    }
+
+    public void setOnActionUp(SpeedSeekBarActionUp onActionUp){
+        mActionUp = onActionUp;
     }
 
     public void setPosition(int position) {
@@ -259,5 +270,11 @@ public class SpeedSeekBar extends View {
             mListener.onPositionSelected(currentItem);
         }
         mCurrentItem = currentItem;
+    }
+
+    public interface SpeedSeekBarActionUp {
+
+        void onActionUp();
+
     }
 }
