@@ -233,46 +233,44 @@ public class ManualModeActivity extends AppCompatActivity {
         speedSeekBarCenter.setOnActionUp(new SpeedSeekBar.SpeedSeekBarActionUp() {
             @Override
             public void onActionUp() {
-                new Handler().post(new Runnable() {
+                sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
+                singleUdp.send(sendData);
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
-                        sendData[14] = (byte)0x00;
-                        sendData[15] = (byte)0x00;
-                        sendData[16] = (byte)0x00;
                         singleUdp.send(sendData);
                     }
-                });
+                }, 200);
             }
         });
         seekBarLeft.setOnActionUp(new SpeedSeekBar.SpeedSeekBarActionUp() {
             @Override
             public void onActionUp() {
-                new Handler().post(new Runnable() {
+                sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
+                singleUdp.send(sendData);
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
-                        sendData[14] = (byte)0x00;
-                        sendData[15] = (byte)0x00;
-                        sendData[16] = (byte)0x00;
+
                         singleUdp.send(sendData);
                     }
-                });
+                },200);
             }
         });
         seekBarRight.setOnActionUp(new SpeedSeekBar.SpeedSeekBarActionUp() {
             @Override
             public void onActionUp() {
-                new Handler().post(new Runnable() {
+                sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
+                singleUdp.send(sendData);
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
-                        sendData[14] = (byte)0x00;
-                        sendData[15] = (byte)0x00;
-                        sendData[16] = (byte)0x00;
                         singleUdp.send(sendData);
                     }
-                });
+                }, 200);
             }
         });
 

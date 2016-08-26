@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.kevin.miniagv2.entity.AgvBean;
 import com.kevin.miniagv2.entity.ProgrammedBean;
 
 import java.util.ArrayList;
@@ -152,6 +153,53 @@ public class DBCurd implements InterfaceDBCurd {
             }
         }
         return programmedBean;
+    }
+
+    @Override
+    public void addTempAgvData(String mac, String id, String ip) {
+        if (databaseWrite != null) {
+            databaseWrite.beginTransaction();//开启事务
+            try {
+
+                databaseWrite.execSQL(DBConstant.INSERT_TEMP_AGV_SQL, new Object[]{
+                        mac, id, ip
+                });
+                databaseWrite.setTransactionSuccessful();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                databaseWrite.endTransaction();
+            }
+        }
+    }
+
+    @Override
+    public void delALLTempAgvData() {
+        if (databaseWrite != null) {
+            databaseWrite.execSQL(DBConstant.DEL_ALL_TEMP_AGV_SQL);
+        }
+    }
+
+    @Override
+    public List<AgvBean> getAllTempAgvData() {
+        List<AgvBean> agvBeans = new ArrayList<>();
+        AgvBean agvBean;
+        Cursor cursor;
+        if (databaseRead != null) {
+            cursor = databaseRead.rawQuery(DBConstant.SELECT_ALL_TEMP_AGV_SQL, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    agvBean = new AgvBean();
+                    agvBean.setGavMac(cursor.getString(cursor.getColumnIndex(DBConstant.TEMP_AGV_MAC)));
+                    agvBean.setGavId(cursor.getString(cursor.getColumnIndex(DBConstant.TEMP_AGV_ID)));
+                    agvBean.setGavIp(cursor.getString(cursor.getColumnIndex(DBConstant.TEMP_AGV_IP)));
+
+                    agvBeans.add(agvBean);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return agvBeans;
     }
 
 }

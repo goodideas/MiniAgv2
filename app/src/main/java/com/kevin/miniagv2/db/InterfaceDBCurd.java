@@ -1,5 +1,6 @@
 package com.kevin.miniagv2.db;
 
+import com.kevin.miniagv2.entity.AgvBean;
 import com.kevin.miniagv2.entity.ProgrammedBean;
 
 import java.util.List;
@@ -23,5 +24,13 @@ public interface InterfaceDBCurd {
 
     //根据ID查找数据
     ProgrammedBean getProgrammedDataById(String pid);
+
+
+    //添加数据
+    void addTempAgvData(String mac,String id,String ip);
+    //删除所有数据
+    void delALLTempAgvData();
+    //得到所有数据
+    List<AgvBean> getAllTempAgvData();
 
 }

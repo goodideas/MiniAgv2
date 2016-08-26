@@ -2,6 +2,7 @@ package com.kevin.miniagv2.activity;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 
 
 import com.kevin.miniagv2.R;
+import com.kevin.miniagv2.db.DBCurd;
 import com.kevin.miniagv2.entity.AgvBean;
 import com.kevin.miniagv2.utils.AgvAdapter;
 import com.kevin.miniagv2.utils.BroadcastUdp;
@@ -45,9 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
     private SingleUdp singleUdp;
-//    private UdpHelper udpHelper = UdpHelper.getUdpInstance(this);
+    //    private UdpHelper udpHelper = UdpHelper.getUdpInstance(this);
     private BroadcastUdp broadcastUdp;
     private SpHelper spHelper;
+    private Handler handler = new Handler();
+    private Runnable broadCastSendRunnable;
+    private int sendTimes = 0;
+    private DBCurd dbCurd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,13 +113,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if(actionBar!=null){
+        if (actionBar != null) {
             actionBar.setTitle("AGV列表");
 
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setSubtitle("主页面");
         }
         spHelper = new SpHelper(MainActivity.this);
+        dbCurd = DBCurd.getInstance(MainActivity.this);
     }
 
     @Override
@@ -174,17 +181,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 selected = -1;
                 isSelect = false;
                 agvAdapter.notifyDataSetChanged();
-                for(int i = 0;i<list.size();i++){
-                    list.remove(i);
-                }
+                list.clear();
+                dbCurd.delALLTempAgvData();
                 agvAdapter.notifyDataSetChanged();
                 if (broadcastUdp == null) {
                     broadcastUdp = new BroadcastUdp();
                 }
-
+                sendTimes = 0;
                 broadcastUdp.stop();
                 broadcastUdp.init();
                 broadcastUdp.send(Util.HexString2Bytes(Constant.SEND_DATA_SEARCH.replace(" ", "")));
+                broadCastSendRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        sendTimes++;
+                        broadcastUdp.send(Util.HexString2Bytes(Constant.SEND_DATA_SEARCH.replace(" ", "")));
+                        if (sendTimes == 4) {
+                            handler.removeCallbacks(broadCastSendRunnable);
+                        }
+                        handler.postDelayed(broadCastSendRunnable, 1000);
+                    }
+                };
+                handler.postDelayed(broadCastSendRunnable, 1000);
                 broadcastUdp.setReceiveListen(new OnReceiveListen() {
                     @Override
                     public void onReceiveData(byte[] data, int len, String remoteIp) {
@@ -195,7 +213,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
                 WaitDialog.immediatelyDismiss();
                 WaitDialog.showDialog(MainActivity.this, "正在搜索。。。", Constant.SEARCH_WAIT_DIALOG_TIME, broadcastUdp);
-
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        list = dbCurd.getAllTempAgvData();
+                        agvAdapter = new AgvAdapter(MainActivity.this, list);
+                        lvAgv.setAdapter(agvAdapter);
+                        lvAgv.smoothScrollToPosition(list.size());
+                    }
+                }, Constant.SEARCH_WAIT_DIALOG_TIME);
                 break;
         }
     }
@@ -206,21 +232,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (Constant.CMD_SEARCH_RESPOND.equalsIgnoreCase(cmd)) {
                 String agvMac = data.substring(Constant.DATA_MAC_START, Constant.DATA_MAC_END);
+//                if(list!=null){
+//                    for (AgvBean aBean:list) {
+//                        if(agvMac.equalsIgnoreCase(aBean.getGavMac())){
+//                            return;
+//                        }
+//                    }
+//                }
+                Log.e(TAG, "agvMac=" + agvMac);
+
+
                 int dataLength = Integer.parseInt(data.substring(Constant.DATA_CONTENT_LENGTH_START_0, Constant.DATA_CONTENT_LENGTH_END_0), 16) +
                         Integer.parseInt(data.substring(Constant.DATA_CONTENT_LENGTH_START_1, Constant.DATA_CONTENT_LENGTH_END_1), 16) * 256;
-                String agvId = data.substring(Constant.DATA_CONTENT_START, Constant.DATA_CONTENT_END(dataLength*2));
-                final AgvBean agvBean = new AgvBean();
-                agvBean.setGavId(agvId);
-                agvBean.setGavIp(ip);
-                agvBean.setGavMac(agvMac);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        list.add(agvBean);
-                        agvAdapter.notifyDataSetChanged();
-                        lvAgv.smoothScrollToPosition(list.size());
-                    }
-                });
+                String agvId = data.substring(Constant.DATA_CONTENT_START, Constant.DATA_CONTENT_END(dataLength * 2));
+//                final AgvBean agvBean = new AgvBean();
+//                agvBean.setGavId(agvId);
+//                agvBean.setGavIp(ip);
+//                agvBean.setGavMac(agvMac);
+                dbCurd.addTempAgvData(agvMac, agvId, ip);
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        list.add(agvBean);
+//                        list = dbCurd.getAllTempAgvData();
+//                        Log.e(TAG,""+list.size());
+////                        agvAdapter.notifyDataSetChanged();
+//                        agvAdapter = new AgvAdapter(MainActivity.this, list);
+//                        lvAgv.setAdapter(agvAdapter);
+//                        lvAgv.smoothScrollToPosition(list.size());
+//                    }
+//                });
 
             }
         }

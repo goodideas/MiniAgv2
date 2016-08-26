@@ -73,6 +73,10 @@ public class SmartLinkActivity extends AppCompatActivity {
     private int flagConnSucessRobotAP = -1;//连接设备AP成功的标志，成功为1
     private boolean whileConnRobotAP = false;//连接设备AP时while的判断标志
 
+    private final int MAX_FIRST_UDP_SEND_TIMES = 4;//3+1
+    private final int MAX_SECOND_UDP_SEND_TIMES = 16;//15+1
+
+
     //连上robotAP后建立udp1
     private static final String udp1Ip = "192.168.1.1";//默认192.168.1.1
     private static final String udp1Port = "2378";//默认 2378
@@ -132,10 +136,10 @@ public class SmartLinkActivity extends AppCompatActivity {
     private byte[] dataCommand = {(byte) 0xff, (byte) 0x08};// 10、11
     private byte[] dataTail = {(byte) 0xFF, (byte) 0x55}; // dataContext.length
 
-    // 广播的数据
+    // 广播的数据,此处修改了命令类型为 00 00（原为 01 00）
     private byte[] seek = {(byte) 0xff, (byte) 0xaa, (byte) 0x00, (byte) 0x00,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-            (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xff,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xff,
             (byte) 0x55};
 
     private String mac = "";
@@ -704,7 +708,7 @@ public class SmartLinkActivity extends AppCompatActivity {
                 Log.e(TAG, "定时发送firstUdpSendCount=" + firstUdpSendCount);
 
                 firstUdpHandler.postDelayed(firstUdpRunnable, 1000);
-                if (firstUdpSendCount > 3) {
+                if (firstUdpSendCount > MAX_FIRST_UDP_SEND_TIMES) {
                     firstUdpHandler.removeCallbacks(firstUdpRunnable);
                 }
             }
@@ -739,8 +743,8 @@ public class SmartLinkActivity extends AppCompatActivity {
             @Override
             public void run() {
                 while (!firstUdpBreakDOwhile) {
-                    if (firstUdpSendCount == 4) {
-                        Log.e(TAG, "已经发送3次");
+                    if (firstUdpSendCount == MAX_FIRST_UDP_SEND_TIMES) {
+                        Log.e(TAG, "已经发送"+MAX_FIRST_UDP_SEND_TIMES+"次");
                         firstUdpRevWhile = false;//关掉udp1的socket的接收while
                         connFirstWifi(currentWifi);//连接之前的wifi
                         if (firstUdpSocket != null) {
@@ -842,9 +846,9 @@ public class SmartLinkActivity extends AppCompatActivity {
             public void run() {
                 send2(seek);
                 secondUdpSendCount++;
-                Log.e(TAG, "定时发送firstUdpSendCount222=" + secondUdpSendCount);
+                Log.e(TAG, "定时发送secondUdpSendCount222=" + secondUdpSendCount);
                 secondUdpHandler.postDelayed(secondUdpRunnable, 1000);
-                if (secondUdpSendCount > 11) {
+                if (secondUdpSendCount > MAX_SECOND_UDP_SEND_TIMES) {
                     secondUdpHandler.removeCallbacks(secondUdpRunnable);
                 }
             }
@@ -879,8 +883,8 @@ public class SmartLinkActivity extends AppCompatActivity {
             @Override
             public void run() {
                 while (!secondUdpBreakDOwhile) {
-                    if (secondUdpSendCount == 11) {
-                        Log.e(TAG, "已经发送11次");
+                    if (secondUdpSendCount == MAX_SECOND_UDP_SEND_TIMES) {
+                        Log.e(TAG, "已经发送"+MAX_SECOND_UDP_SEND_TIMES+"次");
                         secondUdpRevWhile = false;//关掉udp1的socket的接收while
                         secondUdpHandler.removeCallbacks(secondUdpRunnable);
                         if (secondUdpSocket != null) {
@@ -997,8 +1001,9 @@ public class SmartLinkActivity extends AppCompatActivity {
                     && "AA".equals(data.substring(2, 4))) {
                 // 01 10
                 if (data.length() > 24) {
-                    if ("01".equals(data.substring(20, 22))
-                            && "10".equals(data.substring(22, 24))) {
+                    if ("00".equals(data.substring(20, 22))
+                            && "80".equals(data.substring(22, 24))) {
+
                         if (mac.equals(data.substring(4, 20))) {
                             isTrue = true;
                             //数据头 mac 命令类型 数据长度 校验码 数据尾
@@ -1121,3 +1126,5 @@ public class SmartLinkActivity extends AppCompatActivity {
 
 
 
+//FFAA 6825001900000000 0110 2A00 2E1600000405FFFE00000000000000000000C3C5B4C5B4B0B4C5CFB5CDB3000000000000000000000000 2C FF55
+//FFAA 22E9167FCF5C0000 0080 0200 1561 76 FF55

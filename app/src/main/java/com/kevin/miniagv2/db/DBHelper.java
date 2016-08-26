@@ -17,11 +17,14 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DBConstant.CREATE_PROGRAMMED_DB_SQL);
+        db.execSQL(DBConstant.CREATE_TEMP_AGV_DB_SQL);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        switch (oldVersion){
+            case 1:  db.execSQL(DBConstant.CREATE_TEMP_AGV_DB_SQL);
+        }
     }
 
 
