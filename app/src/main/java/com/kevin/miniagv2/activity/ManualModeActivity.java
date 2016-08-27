@@ -138,13 +138,13 @@ public class ManualModeActivity extends AppCompatActivity {
                 R.drawable.btn_star6_selector
         }));
         seekBarRight.setAdapter(new SimpleSpeedSeekBarAdapter(resources, new int[]{
-                R.drawable.btn_star3_selector,
-                R.drawable.btn_star2_selector,
-                R.drawable.btn_star1_selector,
-                R.drawable.btn_star0_selector,
-                R.drawable.btn_star4_selector,
-                R.drawable.btn_star5_selector,
-                R.drawable.btn_star6_selector
+                R.drawable.btn_star3_selector,//0
+                R.drawable.btn_star2_selector,//1
+                R.drawable.btn_star1_selector,//2
+                R.drawable.btn_star0_selector,//3
+                R.drawable.btn_star4_selector,//4
+                R.drawable.btn_star5_selector,//5
+                R.drawable.btn_star6_selector //6
         }));
 
         seekBarLeft.setPosition(3);
@@ -233,6 +233,7 @@ public class ManualModeActivity extends AppCompatActivity {
         speedSeekBarCenter.setOnActionUp(new SpeedSeekBar.SpeedSeekBarActionUp() {
             @Override
             public void onActionUp() {
+                speedSeekBarCenter.setPosition(3);
                 sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
                 singleUdp.send(sendData);
                 new Handler().postDelayed(new Runnable() {
@@ -247,6 +248,7 @@ public class ManualModeActivity extends AppCompatActivity {
         seekBarLeft.setOnActionUp(new SpeedSeekBar.SpeedSeekBarActionUp() {
             @Override
             public void onActionUp() {
+                seekBarLeft.setPosition(3);
                 sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
                 singleUdp.send(sendData);
                 new Handler().postDelayed(new Runnable() {
@@ -262,6 +264,7 @@ public class ManualModeActivity extends AppCompatActivity {
         seekBarRight.setOnActionUp(new SpeedSeekBar.SpeedSeekBarActionUp() {
             @Override
             public void onActionUp() {
+                seekBarRight.setPosition(3);
                 sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
                 singleUdp.send(sendData);
                 new Handler().postDelayed(new Runnable() {
