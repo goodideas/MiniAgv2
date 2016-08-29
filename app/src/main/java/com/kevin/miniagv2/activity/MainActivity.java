@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("AGV列表");
-
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setSubtitle("主页面");
         }
@@ -195,14 +194,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         sendTimes++;
+                        Log.e(TAG, "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
                         broadcastUdp.send(Util.HexString2Bytes(Constant.SEND_DATA_SEARCH.replace(" ", "")));
-                        if (sendTimes == 4) {
+                        handler.postDelayed(broadCastSendRunnable, 2000);
+                        if (sendTimes == 2) {
                             handler.removeCallbacks(broadCastSendRunnable);
                         }
-                        handler.postDelayed(broadCastSendRunnable, 1000);
+
                     }
                 };
-                handler.postDelayed(broadCastSendRunnable, 1000);
+                handler.postDelayed(broadCastSendRunnable, 2000);
                 broadcastUdp.setReceiveListen(new OnReceiveListen() {
                     @Override
                     public void onReceiveData(byte[] data, int len, String remoteIp) {

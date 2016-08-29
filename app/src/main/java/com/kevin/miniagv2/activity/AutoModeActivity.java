@@ -58,6 +58,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
 
     private List<String> sList = new ArrayList<>();
     private ArrayWheelAdapter arrayWheelAdapter;
+    private String mDataTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +84,11 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
             singleUdp.setOnReceiveListen(new OnReceiveListen() {
                 @Override
                 public void onReceiveData(byte[] data, int len, @Nullable String remoteIp) {
-                    final String mData = Util.bytes2HexString(data, len);
+                    mDataTemp = Util.bytes2HexString(data, len);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            analysis(mData);
+                            analysis(mDataTemp);
                         }
                     });
                 }
@@ -106,12 +107,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
         wheelProgrammed.setCyclic(true);
         wheelProgrammed.TEXT_SIZE = (int) (17 * Util.getScreenDensity(this));
         Log.e(TAG, "den=" + Util.getScreenDensity(this));
-//        wheelProgrammed.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ToastUtil.customToast(AutoModeActivity.this, "长按");
-//            }
-//        });
+
 
     }
 
@@ -147,6 +143,7 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void analysis(String data) {
+        Log.e(TAG, "analysis");
         if (Util.checkData(data)) {
             Log.e(TAG, "数据=" + data);
             String cmd = data.substring(Constant.DATA_CMD_START, Constant.DATA_CMD_END);
@@ -288,8 +285,11 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
     protected void onStart() {
         super.onStart();
         Log.e(TAG, "start");
+
         if (wheelProgrammed != null && sList != null && dbCurd != null) {
             //从数据库读取信息
+            Log.e(TAG,"进入start");
+            sList.clear();//清空数据
             List<ProgrammedBean> pList = dbCurd.getAllProgrammedData();
             //如果数据不为空，将数据添加到sList中
             if (pList.size() != 0) {
@@ -303,6 +303,20 @@ public class AutoModeActivity extends AppCompatActivity implements View.OnClickL
             //重新导入数据源
             arrayWheelAdapter = new ArrayWheelAdapter(sList);
             wheelProgrammed.setAdapter(arrayWheelAdapter);
+            if(singleUdp!=null){
+                singleUdp.setOnReceiveListen(new OnReceiveListen() {
+                    @Override
+                    public void onReceiveData(byte[] data, int len, @Nullable String remoteIp) {
+                        mDataTemp = Util.bytes2HexString(data, len);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                analysis(mDataTemp);
+                            }
+                        });
+                    }
+                });
+            }
         }
 
 

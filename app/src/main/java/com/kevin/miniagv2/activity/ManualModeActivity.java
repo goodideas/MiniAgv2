@@ -204,12 +204,8 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onPositionSelected(int position) {
                 final int spd;
-
-
                 spd = position > 3 ? position : (3 - position);
-
                 rightWheel = Byte.parseByte("" + spd);
-
                 if (flag) {
                     vibrator.vibrate(100);
                     new Handler().post(new Runnable() {
@@ -234,6 +230,10 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onActionUp() {
                 speedSeekBarCenter.setPosition(3);
+                flag = false;
+                seekBarLeft.setPosition(3);
+                seekBarRight.setPosition(3);
+                flag = true;
                 sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
                 singleUdp.send(sendData);
                 new Handler().postDelayed(new Runnable() {
@@ -249,6 +249,10 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onActionUp() {
                 seekBarLeft.setPosition(3);
+                flag = false;
+                speedSeekBarCenter.setPosition(3);
+                seekBarRight.setPosition(3);
+                flag = true;
                 sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
                 singleUdp.send(sendData);
                 new Handler().postDelayed(new Runnable() {
@@ -265,6 +269,10 @@ public class ManualModeActivity extends AppCompatActivity {
             @Override
             public void onActionUp() {
                 seekBarRight.setPosition(3);
+                flag = false;
+                speedSeekBarCenter.setPosition(3);
+                seekBarLeft.setPosition(3);
+                flag = true;
                 sendData = Util.HexString2Bytes(Constant.SEND_DATA_SPEED(spHelper.getSpAgvMac()).replace(" ", ""));
                 singleUdp.send(sendData);
                 new Handler().postDelayed(new Runnable() {

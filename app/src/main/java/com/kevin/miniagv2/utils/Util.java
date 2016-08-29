@@ -120,7 +120,7 @@ public class Util {
                                 String temp = "0" + Integer.toHexString(sum);
                                 if (data.substring(data.length() - 6, data.length() - 4).equalsIgnoreCase(temp.substring(temp.length() - 2, temp.length()).toUpperCase())) {
                                     //数据验证通过
-                                    Log.e("Util", "数据为真。命令=" + data.substring(20, 24));
+//                                    Log.e("Util", "数据为真。命令=" + data.substring(20, 24));
                                     return true;
                                 }
                             }

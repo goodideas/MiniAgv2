@@ -139,7 +139,7 @@ public class SingleUdp {
                         udpSocket.receive(udpReceivePacket);
                         int len = udpReceivePacket.getLength();
                         if (len > 0) {
-                            Log.e(TAG,"len="+len);
+//                            Log.e(TAG,"len="+len);
                             Log.e(TAG,"revData="+Util.bytes2HexString(udpReceiveBytes, len));
                             if (onReceiveListen != null) {
                                 onReceiveListen.onReceiveData(udpReceiveBytes, len, null);

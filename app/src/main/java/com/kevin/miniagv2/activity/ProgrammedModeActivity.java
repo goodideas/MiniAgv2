@@ -74,9 +74,10 @@ public class ProgrammedModeActivity extends AppCompatActivity {
             @Override
             public void onReceiveData(byte[] data, int len, @Nullable String remoteIp) {
                 String mData = Util.bytes2HexString(data, len);
-                if (Util.checkData(mData)) {
+//                FFAA50C6CF34FE18000002810B00003636393734454541FFFFD9FF55 00~ 512长度 可能出现 前面数据正确，但后面多了0
+                if (Util.checkData(mData)||(mData.length()==512&&Util.checkData(mData.substring(0,56)))) {
                     String cmd = mData.substring(Constant.DATA_CMD_START, Constant.DATA_CMD_END);
-                    Log.e(TAG,"接收的数据="+mData);
+//                    Log.e(TAG,"接收的数据="+mData);
 
                     if (Constant.CMD_PROGRAMMED_CLEAR_RESPOND.equalsIgnoreCase(cmd)) {
                         ToastUtil.customToast(ProgrammedModeActivity.this, "清除成功");
